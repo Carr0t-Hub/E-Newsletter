@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 0);
+//
 
 try {
   // $pdo = new PDO('mysql:host=127.0.0.1;dbname=pds_db', 'root', '');
@@ -14,7 +16,7 @@ session_start();
 
 // function getArticle($pdo, $datePublish){
 function getArticle($pdo)
-{ 
+{
   $temp = array();
   $sql = "SELECT 
   newsletter.title as title,
@@ -43,12 +45,12 @@ function getArticle($pdo)
     $temp[] = $row;
   }
   // $data = preg_replace("/\{[^}]+\}/", "", $myData);
-  
+
   return $temp;
 }
 
 function getArticlebyIssue($pdo, $isyu_id)
-{ 
+{
   $temp = array();
   $sql = "SELECT 
   newsletter.title as title,
@@ -77,13 +79,13 @@ function getArticlebyIssue($pdo, $isyu_id)
     $temp[] = $row;
   }
   // $data = preg_replace("/\{[^}]+\}/", "", $myData);
-  
+
   return $temp;
 }
 
 
 function viewletter($pdo, $newsletter_id)
-{ 
+{
   $temp = array();
   $sql = "SELECT newsletter.title as title,
   newsletter.description as description,
@@ -111,7 +113,7 @@ function viewletter($pdo, $newsletter_id)
 
 //START VIEWING OF OTHER ARTICLE WITHIN THE ISSUE
 function getArticle2($pdo, $newsletter_id, $isyu_id)
-{ 
+{
   $temp = array();
   $sql = "SELECT newsletter.title as title,
   newsletter.description as description,
@@ -137,8 +139,8 @@ function getArticle2($pdo, $newsletter_id, $isyu_id)
 
 /// START VIEWING OF ISSUE SLIDER QUERY
 function viewIssue($pdo, $isyu_id)
-{ 
-  if($isyu_id <> ''){
+{
+  if ($isyu_id <> '') {
     $temp = array();
     $sql = "SELECT * FROM `newsletter_issue` WHERE `id` != :isyow_id ORDER BY id DESC";
     $stmt = $pdo->prepare($sql);
@@ -146,7 +148,7 @@ function viewIssue($pdo, $isyu_id)
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $temp[] = $row;
     }
-  }else{
+  } else {
     $temp = array();
     $sql = "SELECT * FROM `newsletter_issue` WHERE `post_status`  = 0 and `id` != :isyow_id ORDER BY id DESC";
     $stmt = $pdo->prepare($sql);
